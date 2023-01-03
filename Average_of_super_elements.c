@@ -1,39 +1,52 @@
 #include<stdio.h>
+#define MAX_N 100
 int main()
 {
-    int a[100],i,j,n,c,b[100],k=0,sum=0;
-    float avg,d;
-    scanf("%d",&n);
-    for(i=0;i<n;i++)
+  int n, arr[MAX_N];
+  int skip[MAX_N];
+  int sum=0;
+  int items=0;
+  double res;
+  scanf("%d",&n);
+  if (n>MAX_N)
+  {
+    printf("invalid argument");
+    return -1;
+  }
+
+  for(int i =0 ;i < n; ++i)
+  {
+    scanf("%d",&arr[i]);
+    skip[i]=0;
+  }
+  for(int i=0; i<n; i++)
+  {
+    int count = 0;
+    if (skip[i]) continue;
+    for(int j=0; j<n; j++)
     {
-        scanf("%d",&a[i]);
+      if(arr[i]==arr[j])
+      {
+        ++count;
+        skip[j]=1;
+      }
     }
-    for(i=0;i<n;i++)
+    if(arr[i]==count)
     {
-        c=0;
-        for(j=0;j<n;j++)
-        {
-            if(a[i]==a[j])
-            {
-                c++;
-            }
-        }
-        if(c==a[i])
-        {
-            b[k]=a[i];
-            sum+=b[k];
-            a[i]=0;
-            k++;
-        }
+      sum+=arr[i];
+      ++items;
     }
-    d=sum;
-    if(k==0)
-    {
-        printf("-1");
-    }
-    else
-    {
-        avg=float(d)/k;
-        printf("%.2f",avg);
-    }
+  }
+  if (items==0)
+  {
+    printf("-1");
+  }
+  else
+  {
+    res = ((double)sum)/items;
+    printf("%.2f",res);
+  }
+  printf("
+");
+  return 0;
 }
